@@ -26,7 +26,14 @@ jobs:
           GH_TOKEN: ${{ secrets.RELEASE_TOKEN || secrets.ORG_TOKEN || secrets.GITHUB_TOKEN }}
         shell: pwsh
         run: |
-          $tag = "v${{ github.run_number }}"
-          $setup = Get-ChildItem -Recurse -Filter '*Setup.exe' dist | Select-Object -First 1
-          if (-not $setup) { throw 'Setup.exe was not produced' }
-          gh release create $tag $setup.FullName --repo $env:GITHUB_REPOSITORY --title "Wildline Nation $tag" --notes "Unsigned Windows installer from ${{ github.sha }}. Yum Leung Cha vertical slice; tests and captures intentionally not run in this pass."
+          $version = (Get-Content package.json -Raw | ConvertFrom-Json).version
+          $baseTag = "v$version"
+          gh release view $baseTag --repo $env:GITHUB_REPOSITORY *> $null
+          $tag = if ($LASTEXITCODE -eq 0) { "$baseTag-build.${{ github.run_number }}" } else { $baseTag }
+          $setup = Get-ChildItem -Recurse -Filter '*-Setup-*.exe' dist | Select-Object -First 1
+          $releaseIndex = Get-ChildItem -Recurse -Filter 'RELEASES' dist | Select-Object -First 1
+          $fullPackage = Get-ChildItem -Recurse -Filter '*-full.nupkg' dist | Select-Object -First 1
+          if (-not $setup) { throw 'The Squirrel setup executable was not produced' }
+          if (-not $releaseIndex) { throw 'The Squirrel RELEASES index was not produced' }
+          if (-not $fullPackage) { throw 'The Squirrel full package was not produced' }
+          gh release create $tag $setup.FullName $releaseIndex.FullName $fullPackage.FullName --repo $env:GITHUB_REPOSITORY --title "Wildline Nation $tag" --notes "Unsigned Windows installer from ${{ github.sha }}. Yum Leung Cha vertical slice; tests and captures intentionally not run in this pass."
