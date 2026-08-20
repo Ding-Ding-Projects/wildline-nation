@@ -15,7 +15,7 @@ The root scripts also provide a fresh-machine dependency path (`download-depende
 ## Play rules in this slice
 
 - Walk to a building to enter its physical interior context.
-- The pause chrome only offers Save and Close Yow Hay.
+- The pause chrome only offers Save and Close game.
 - Shopping, haircuts, meals, Catch Balls, house contracts, crew hiring, and prizes are physical-place transactions. The map and general GUI cannot buy them.
 - The builder office offers the Harbour Courtyard 01 template and hires Jo, Ren, and Akiko for a visible ten-phase construction sequence.
 - The Blue Loop subway and Route 7 bus are rideable contextual transit places.
@@ -24,7 +24,7 @@ The root scripts also provide a fresh-machine dependency path (`download-depende
 
 ## Status
 
-This is a Yum Leung Cha vertical slice. Tests, lint, typecheck, review suites, and capture workflows are intentionally not run in this speed pass; they remain open work for the planned Yum Tong release-grade pass.
+This is a rapid vertical slice release. Tests, lint, typecheck, review suites, and capture workflows are intentionally not run in this speed pass; they remain open work for the planned release-grade pass.
 
 ## License
 

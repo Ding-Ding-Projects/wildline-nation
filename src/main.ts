@@ -44,7 +44,7 @@ app.innerHTML = `
   <main class="shell">
     <header class="topbar">
       <div class="brand"><span class="brand-mark">W</span><div><strong>Wildline Nation</strong><small>Harbourlight City · City-life vertical slice</small></div></div>
-      <div class="top-actions"><span class="money" id="money">$240</span><button class="quiet" id="save">Save</button><button class="quiet danger" id="close">Close Yow Hay</button></div>
+      <div class="top-actions"><span class="money" id="money">$240</span><button class="quiet" id="save">Save</button><button class="quiet danger" id="close">Close game</button></div>
     </header>
     <section class="game-frame">
       <div class="scene-wrap"><canvas id="scene" aria-label="Harbourlight City map"></canvas><div class="scene-label"><span class="eyebrow">OPEN CITY / DAY 01</span><h1 id="scene-title">Harbourlight City</h1><p id="scene-subtitle">Walk to a place. The city does not unlock — it welcomes.</p></div><div class="toast" id="toast" role="status"></div></div>

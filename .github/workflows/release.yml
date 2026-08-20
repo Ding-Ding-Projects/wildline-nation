@@ -36,4 +36,4 @@ jobs:
           if (-not $setup) { throw 'The Squirrel setup executable was not produced' }
           if (-not $releaseIndex) { throw 'The Squirrel RELEASES index was not produced' }
           if (-not $fullPackage) { throw 'The Squirrel full package was not produced' }
-          gh release create $tag $setup.FullName $releaseIndex.FullName $fullPackage.FullName --repo $env:GITHUB_REPOSITORY --title "Wildline Nation $tag" --notes "Unsigned Windows installer from ${{ github.sha }}. Yum Leung Cha vertical slice; tests and captures intentionally not run in this pass."
+          gh release create $tag $setup.FullName $releaseIndex.FullName $fullPackage.FullName --repo $env:GITHUB_REPOSITORY --title "Wildline Nation $tag" --notes "Unsigned Windows installer from ${{ github.sha }}. Rapid vertical slice release; tests and captures intentionally not run in this pass."
