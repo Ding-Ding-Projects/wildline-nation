@@ -1,14 +1,14 @@
 import { CreatureDomainError } from './errors';
-import type { CatchBallInventory, CatchBallType, CaptureAttempt, CaptureOutcome, CreatureInstance, CreatureResult, CreatureSnapshot, CreatureSpecies, CreatureServiceOptions, Encounter } from './types';
+import type { DeterministicCatchBallInventory, CatchBallType, CaptureAttempt, DeterministicCaptureOutcome, CreatureInstance, CreatureResult, CreatureSnapshot, DeterministicCreatureSpecies, CreatureServiceOptions, Encounter } from './types';
 
 const clone = <T>(value: T): T => JSON.parse(JSON.stringify(value)) as T;
 const ok = <T>(value: T): CreatureResult<T> => ({ ok: true, value });
 const fail = <T>(code: ConstructorParameters<typeof CreatureDomainError>[0], message: string, details: Record<string, unknown> = {}): CreatureResult<T> => ({ ok: false, error: new CreatureDomainError(code, message, details) });
 const integer = (value: number, min = 0): boolean => Number.isSafeInteger(value) && value >= min;
 
-function validateSpecies(species: CreatureSpecies): boolean { return Boolean(species.id.trim() && species.name.trim() && integer(species.basePower, 1) && integer(species.baseResilience, 1) && species.captureDifficulty >= 0 && species.captureDifficulty <= 1 && species.habitatIds.length > 0); }
+function validateSpecies(species: DeterministicCreatureSpecies): boolean { return Boolean(species.id.trim() && species.name.trim() && integer(species.basePower, 1) && integer(species.baseResilience, 1) && species.captureDifficulty >= 0 && species.captureDifficulty <= 1 && species.habitatIds.length > 0); }
 
-export const DEFAULT_SPECIES: readonly CreatureSpecies[] = [
+export const DEFAULT_SPECIES: readonly DeterministicCreatureSpecies[] = [
   { id: 'brineling', name: 'Brineling', element: 'tide', basePower: 24, baseResilience: 34, captureDifficulty: 0.28, habitatIds: ['tideglass-habitat', 'harbour-courtyard'] },
   { id: 'fallowisp', name: 'Fallowisp', element: 'grove', basePower: 29, baseResilience: 25, captureDifficulty: 0.42, habitatIds: ['old-quay', 'tideglass-habitat'] },
   { id: 'cinderfinch', name: 'Cinderfinch', element: 'ember', basePower: 31, baseResilience: 20, captureDifficulty: 0.54, habitatIds: ['civic-steps'] },
@@ -21,14 +21,14 @@ export const DEFAULT_BALL_TYPES: readonly CatchBallType[] = [
 ];
 
 export class CreatureService {
-  private readonly species = new Map<string, CreatureSpecies>();
+  private readonly species = new Map<string, DeterministicCreatureSpecies>();
   private readonly ballTypes = new Map<string, CatchBallType>();
   private readonly now: () => number;
   private readonly random: () => number;
   private readonly idFactory: (prefix: string) => string;
   private encounters = new Map<string, Encounter>();
   private creatures = new Map<string, CreatureInstance>();
-  private inventories = new Map<string, CatchBallInventory>();
+  private inventories = new Map<string, DeterministicCatchBallInventory>();
 
   constructor(options: Partial<CreatureServiceOptions> = {}) {
     const species = options.species ?? DEFAULT_SPECIES;
@@ -42,12 +42,12 @@ export class CreatureService {
   }
 
   static fromSnapshot(options: CreatureServiceOptions, snapshot: CreatureSnapshot): CreatureResult<CreatureService> { const service = new CreatureService(options); const restored = service.reloadSnapshot(snapshot); return restored.ok ? ok(service) : restored; }
-  listSpecies(): readonly CreatureSpecies[] { return [...this.species.values()].map(clone); }
+  listSpecies(): readonly DeterministicCreatureSpecies[] { return [...this.species.values()].map(clone); }
   listBallTypes(): readonly CatchBallType[] { return [...this.ballTypes.values()].map(clone); }
   listCreatures(ownerId: string): readonly CreatureInstance[] { return [...this.creatures.values()].filter((creature) => creature.ownerId === ownerId).map(clone); }
   getEncounter(encounterId: string): CreatureResult<Encounter> { const encounter = this.encounters.get(encounterId); return encounter ? ok(clone(encounter)) : fail('encounter-not-found', 'The requested encounter does not exist.', { encounterId }); }
 
-  grantBalls(ownerId: string, ballTypeId: string, quantity: number): CreatureResult<CatchBallInventory> {
+  grantBalls(ownerId: string, ballTypeId: string, quantity: number): CreatureResult<DeterministicCatchBallInventory> {
     const ball = this.ballTypes.get(ballTypeId);
     if (!ownerId.trim()) return fail('owner-invalid', 'An owner identifier is required.');
     if (!ball) return fail('ball-not-found', 'The requested Catch Ball type does not exist.', { ballTypeId });
@@ -55,12 +55,12 @@ export class CreatureService {
     const current = this.inventories.get(ownerId) ?? { ownerId, quantities: {}, revision: 0 };
     const nextQuantity = (current.quantities[ballTypeId] ?? 0) + quantity;
     if (nextQuantity > ball.maxStack) return fail('ball-invalid', 'The Catch Ball stack would exceed its bounded maximum.', { maxStack: ball.maxStack });
-    const inventory: CatchBallInventory = { ownerId, quantities: { ...current.quantities, [ballTypeId]: nextQuantity }, revision: current.revision + 1 };
+    const inventory: DeterministicCatchBallInventory = { ownerId, quantities: { ...current.quantities, [ballTypeId]: nextQuantity }, revision: current.revision + 1 };
     this.inventories.set(ownerId, inventory);
     return ok(clone(inventory));
   }
 
-  getInventory(ownerId: string): CreatureResult<CatchBallInventory> { if (!ownerId.trim()) return fail('owner-invalid', 'An owner identifier is required.'); return ok(clone(this.inventories.get(ownerId) ?? { ownerId, quantities: {}, revision: 0 })); }
+  getInventory(ownerId: string): CreatureResult<DeterministicCatchBallInventory> { if (!ownerId.trim()) return fail('owner-invalid', 'An owner identifier is required.'); return ok(clone(this.inventories.get(ownerId) ?? { ownerId, quantities: {}, revision: 0 })); }
 
   createEncounter(ownerId: string, speciesId: string, habitatId: string): CreatureResult<Encounter> {
     const species = this.species.get(speciesId);
@@ -82,7 +82,7 @@ export class CreatureService {
     return ok(clone(next));
   }
 
-  capture(attempt: CaptureAttempt): CreatureResult<CaptureOutcome> {
+  capture(attempt: CaptureAttempt): CreatureResult<DeterministicCaptureOutcome> {
     const encounter = this.encounters.get(attempt.encounterId);
     const ball = this.ballTypes.get(attempt.ballTypeId);
     if (!encounter) return fail('encounter-not-found', 'The requested encounter does not exist.', { encounterId: attempt.encounterId });
@@ -98,7 +98,7 @@ export class CreatureService {
     const captured = roll < probability;
     const instanceId = captured ? this.idFactory(`creature-${species.id}`) : null;
     if (instanceId && this.creatures.has(instanceId)) return fail('duplicate-creature', 'The generated creature instance identifier already exists.');
-    const nextInventory: CatchBallInventory = { ...inventory, quantities: { ...inventory.quantities, [attempt.ballTypeId]: quantity - 1 }, revision: inventory.revision + 1 };
+    const nextInventory: DeterministicCatchBallInventory = { ...inventory, quantities: { ...inventory.quantities, [attempt.ballTypeId]: quantity - 1 }, revision: inventory.revision + 1 };
     this.inventories.set(attempt.ownerId, nextInventory);
     const nextEncounter: Encounter = { ...encounter, attempts: encounter.attempts + 1, stability: Math.max(0, encounter.stability - 0.12), state: captured ? 'captured' : encounter.attempts + 1 >= 5 ? 'fled' : encounter.attempts % 2 === 0 ? 'calm' : 'agitated' };
     this.encounters.set(encounter.encounterId, nextEncounter);

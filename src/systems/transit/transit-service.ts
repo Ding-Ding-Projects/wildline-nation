@@ -1,9 +1,9 @@
 import { TransitDomainError } from './errors';
 import type {
   Disruption, FareValidation, FareValidationRequest, HeadwayWindow,
-  PassengerJourney, ServiceClock, TransitPass, TransitResult, TransitRoute,
-  TransitServiceOptions, TransitSnapshot, TransitStatusSnapshot, TransitStop,
-  VehicleTrip,
+  PassengerJourney, ServiceClock, TransitPass, TransitResult, DeterministicTransitRoute,
+  TransitServiceOptions, TransitSnapshot, TransitStatusSnapshot,
+  VehicleTrip, DeterministicTransitStop,
 } from './types';
 
 type Journey = PassengerJourney;
@@ -21,8 +21,8 @@ function validateHeadway(window: HeadwayWindow): boolean {
 }
 
 export class TransitService {
-  private readonly stops = new Map<string, TransitStop>();
-  private readonly routes = new Map<string, TransitRoute>();
+  private readonly stops = new Map<string, DeterministicTransitStop>();
+  private readonly routes = new Map<string, DeterministicTransitRoute>();
   private readonly now: () => number;
   private trips = new Map<string, VehicleTrip>();
   private journeys = new Map<string, Journey>();
@@ -49,8 +49,8 @@ export class TransitService {
     return restored.ok ? ok(service) : restored;
   }
 
-  listStops(): readonly TransitStop[] { return [...this.stops.values()].map(clone); }
-  listRoutes(): readonly TransitRoute[] { return [...this.routes.values()].map(clone); }
+  listStops(): readonly DeterministicTransitStop[] { return [...this.stops.values()].map(clone); }
+  listRoutes(): readonly DeterministicTransitRoute[] { return [...this.routes.values()].map(clone); }
   listPasses(holderId?: string): readonly TransitPass[] { return [...this.passes.values()].filter((pass) => !holderId || pass.holderId === holderId).map(clone); }
   listJourneys(riderId?: string): readonly Journey[] { return [...this.journeys.values()].filter((journey) => !riderId || journey.riderId === riderId).map(clone); }
 
@@ -167,7 +167,7 @@ export class TransitService {
   serializeSnapshot(): string { return JSON.stringify(this.saveSnapshot()); }
   parseSnapshot(serialized: string): TransitResult<TransitSnapshot> { try { return this.reloadSnapshot(JSON.parse(serialized) as TransitSnapshot); } catch { return fail('snapshot-invalid', 'The transit snapshot is not valid JSON.'); } }
 
-  private nextDeparture(route: TransitRoute, minute: number): number | null {
+  private nextDeparture(route: DeterministicTransitRoute, minute: number): number | null {
     if (minute < route.operatingStartMinute || minute >= route.operatingEndMinute) return null;
     const window = route.headways.find((candidate) => minute >= candidate.startMinute && minute < candidate.endMinute);
     if (!window) return null;
