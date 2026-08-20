@@ -1,6 +1,6 @@
 {
   "name": "wildline-nation",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Wildline Nation — an original city exploration and creature-battle life sim vertical slice.",
   "main": "electron/main.cjs",
   "author": "Ding-Ding Projects",
@@ -8,6 +8,7 @@
   "scripts": {
     "dev": "concurrently -k \"vite --host 127.0.0.1\" \"wait-on http://127.0.0.1:5173 && electron .\"",
     "build": "vite build",
+    "test": "vitest run",
     "start": "electron .",
     "dist": "npm run build && electron-builder --win squirrel --publish never",
     "site:build": "node scripts/build-site.mjs",
@@ -23,6 +24,7 @@
     "electron-builder": "^25.1.8",
     "typescript": "^5.7.2",
     "vite": "^6.0.5",
+    "vitest": "^3.2.7",
     "wait-on": "^8.0.1"
   },
   "build": {
@@ -32,7 +34,9 @@
     "asar": true,
     "forceCodeSigning": false,
     "win": {
-      "target": ["squirrel"],
+      "target": [
+        "squirrel"
+      ],
       "signAndEditExecutable": false,
       "signingHashAlgorithms": []
     },
@@ -41,6 +45,11 @@
       "iconUrl": "https://raw.githubusercontent.com/Ding-Ding-Projects/wildline-nation/main/assets/icon.ico",
       "msi": false
     },
-    "files": ["dist/**", "electron/**", "package.json", "assets/**"]
+    "files": [
+      "dist/**",
+      "electron/**",
+      "package.json",
+      "assets/**"
+    ]
   }
 }
