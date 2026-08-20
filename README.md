@@ -27,7 +27,7 @@ The root scripts also provide a fresh-machine dependency path (`download-depende
 
 ## Status
 
-The focused transit/save suite contains six passing tests. The production Vite bundle builds successfully, and a real headless desktop artifact completed Harbourlight → Gullhaven → Harbourlight → Asterfield with all three streetcar panels, both physical-ticket flows, consumed-ticket badges, and city arrivals verified.
+The focused transit/save suite contains seven passing tests. The production Vite bundle builds successfully, and a real headless desktop artifact completed Harbourlight → Gullhaven → Harbourlight → Asterfield with all three streetcar panels, both physical-ticket flows, consumed-ticket badges, and city arrivals verified.
 
 ## License
 

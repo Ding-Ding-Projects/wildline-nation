@@ -12,7 +12,7 @@
 - Added save-before-departure and idempotent resume/arrival behavior for ferry and flight journeys.
 - Added an accessible building list beside the canvas map and responsive narrow-layout styling.
 
-Verification: six focused Vitest cases passed; the production Vite build passed; two isolated built-artifact headless journeys completed the full Harbourlight → Gullhaven → Harbourlight → Asterfield route and exercised all three streetcar panels. Final ferry and flight ticket counts were verified as zero immediately after boarding.
+Verification: seven focused Vitest cases passed; the production Vite build passed; two isolated built-artifact headless journeys completed the full Harbourlight → Gullhaven → Harbourlight → Asterfield route and exercised all three streetcar panels. Final ferry and flight ticket counts were verified as zero immediately after boarding.
 
 ## 0.1.0 — Harbourlight City vertical slice
 
@@ -21,6 +21,6 @@ Verification: six focused Vitest cases passed; the production Vite build passed;
 - Added the Harbour Courtyard 01 template, named crew, and ten visible construction phases.
 - Added Brineling, Catch Balls, a paid turn-based battle contract, and Lantern Current.
 - Added ten-second autosave and save-on-close.
-- Added the non-playable Pages-ready Day Teet Hui.
+- Added the non-playable Pages-ready landing page.
 
 Verification note: the initial rapid-release pass intentionally ran build/package only. Tests, lint, typecheck, review suites, and captures were deferred to the full release pass.

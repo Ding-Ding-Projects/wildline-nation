@@ -14,11 +14,11 @@ Intercity travel is intentionally hub-and-spoke: Harbourlight ↔ Gullhaven by f
 - `src/game/save.ts` owns bounded normalization and deterministic version 1 migration.
 - `src/main.ts` owns renderer interaction, physical-context checks, ride animation, save-before-departure, and resume/arrival behavior.
 - `electron/main.cjs` writes version 2 saves but falls back to the legacy version 1 filename for migration.
-- Concurrent transit, creature, and construction system work was preserved in separate linked worktrees and was not overwritten by this branch.
+- The concurrent commerce and construction service work from `origin/main` is merged intact. The separate transit and creature service branch remains isolated for its owner and was not overwritten.
 
 ## Verification evidence
 
-- `npm test`: 1 file, 6 tests passed.
+- `npm test`: 1 file, 7 tests passed.
 - `npm run build`: production Vite bundle passed.
 - `git diff --check`: passed; only expected line-ending conversion warnings were reported.
 - First built-artifact headless drive: 29 bounded steps completed against one exact `file:///.../dist/index.html` target.
@@ -28,7 +28,7 @@ Intercity travel is intentionally hub-and-spoke: Harbourlight ↔ Gullhaven by f
 
 ## Remaining work
 
-- The separate transit/creature and construction domain branches should be integrated through their public exports after their owners finish and their changes are reviewed.
+- The separate transit and creature service branch should be integrated through its public exports after its owner finishes and its changes are reviewed.
 - The current canvas buildings are deterministic map blocks rather than authored 3D meshes or navigable interior scenes.
 - Full regional schedules, capacity, disruptions, rail, coaches, and additional cities remain future work.
 - Dependency audit output reports 13 high and 1 critical advisory in the existing dependency tree; this change did not force-upgrade packaging dependencies.
