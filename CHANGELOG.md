@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+- Added production-shaped deterministic transit, creature capture, and paid battle domain services
+  with typed APIs, explicit failure types, bounded snapshots, and integration documentation.
+- This rapid delivery pass intentionally ran no tests, lint, typecheck, review suites, accessibility
+  or security suites, smoke suites, or captures.
+
 ## 0.1.0 — Harbourlight City vertical slice
 
 - Added an original 2.5D city map with Rest Stop, grocery, restaurant, salon, builder office, arena, Minigame Centre, bus, and subway places.
