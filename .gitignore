@@ -1,0 +1,14 @@
+node_modules/
+dist/
+site/dist/
+release/
+build/
+out/
+.vite/
+*.log
+*.tsbuildinfo
+.env
+.env.*
+.DS_Store
+.idea/
+.vscode/
