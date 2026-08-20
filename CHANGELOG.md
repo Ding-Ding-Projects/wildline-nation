@@ -7,6 +7,6 @@
 - Added the Harbour Courtyard 01 template, named crew, and ten visible construction phases.
 - Added Brineling, Catch Balls, a paid turn-based battle contract, and Lantern Current.
 - Added ten-second autosave and save-on-close.
-- Added the non-playable Pages-ready Day Teet Hui.
+- Added the non-playable Pages-ready landing page.
 
-Verification note: this Yum Leung Cha pass intentionally ran build/package only. Tests, lint, typecheck, review suites, and captures are deferred to Yum Tong.
+Verification note: this rapid release pass intentionally ran build/package only. Tests, lint, typecheck, review suites, and captures are deferred to the release-grade pass.

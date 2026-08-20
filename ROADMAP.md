@@ -10,9 +10,9 @@
 - [x] Brineling encounter, Catch Ball capture contract, and paid battle
 - [x] One substantial Lantern Current minigame and physical prize counter
 - [x] Ten-second autosave and save-on-close
-- [x] Pages-ready Day Teet Hui
+- [x] Pages-ready landing page
 
-## Yum Tong expansion
+## Release-grade expansion
 
 - [ ] 50 open cities and approximately 5,000 enterable buildings
 - [ ] 100 creature forms, 500 city-exclusive minigames, and full life simulation
