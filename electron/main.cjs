@@ -3,7 +3,8 @@ const fs = require('node:fs/promises');
 const path = require('node:path');
 const { randomUUID } = require('node:crypto');
 
-const saveName = 'wildline-nation.save.v1.json';
+const saveName = 'wildline-nation.save.v2.json';
+const legacySaveName = 'wildline-nation.save.v1.json';
 let windowRef;
 
 async function atomicWrite(filePath, value) {
@@ -21,11 +22,14 @@ async function atomicWrite(filePath, value) {
   }
 }
 
-function savePath() { return path.join(app.getPath('userData'), saveName); }
+function savePath(name = saveName) { return path.join(app.getPath('userData'), name); }
 
 async function loadSave() {
-  try { return JSON.parse(await fs.readFile(savePath(), 'utf8')); }
-  catch { return null; }
+  for (const name of [saveName, legacySaveName]) {
+    try { return JSON.parse(await fs.readFile(savePath(name), 'utf8')); }
+    catch (error) { if (error?.code !== 'ENOENT') return null; }
+  }
+  return null;
 }
 
 async function save(value) { await atomicWrite(savePath(), value); return { savedAt: new Date().toISOString() }; }

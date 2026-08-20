@@ -1,6 +1,6 @@
 # Wildline Nation
 
-Wildline Nation is an original city-exploration and life-simulation desktop game with creature encounters, licensed battles, public transit, physical stores, and visible home construction. This repository currently contains the `v0.1.0` Harbourlight City vertical slice.
+Wildline Nation is an original city-exploration and life-simulation desktop game with creature encounters, licensed battles, public transit, physical stores, and visible home construction. Version `0.2.0` expands the playable world to Harbourlight, Gullhaven, and Asterfield.
 
 ## Run the slice
 
@@ -12,19 +12,22 @@ npm start
 
 The root scripts also provide a fresh-machine dependency path (`download-dependencies.bat`), a runnable build (`build.bat`), and an unsigned Squirrel.Windows installer build (`build-installer.bat`).
 
-## Play rules in this slice
+## Play rules
 
 - Walk to a building to enter its physical interior context.
-- The pause chrome only offers Save and Close Yow Hay.
+- The top bar only offers Save and Close game actions.
 - Shopping, haircuts, meals, Catch Balls, house contracts, crew hiring, and prizes are physical-place transactions. The map and general GUI cannot buy them.
-- The builder office offers the Harbour Courtyard 01 template and hires Jo, Ren, and Akiko for a visible ten-phase construction sequence.
-- The Blue Loop subway and Route 7 bus are rideable contextual transit places.
-- Brineling is the first original creature, Catch Balls are the capture item, the Civic Circuit Arena pays $85 for a battle contract, and Lantern Current is the first city-exclusive minigame.
+- Each city has its own Rest Stop, grocer, restaurant, salon, builder, arena, minigame centre, bus, subway, streetcar, creature, construction contract, and local progress.
+- Harbourlight’s Gold Quay Line, Gullhaven’s Copper Bell Line, and Asterfield’s Sunline Loop are five-stop streetcar routes covered by the national basic transit pass.
+- Ferries connect Harbourlight and Gullhaven for $18 one-way through physical ferry buildings. Flights connect Harbourlight and Asterfield for $60 one-way through physical airport buildings.
+- Intercity tickets are route-specific physical inventory: buy one inside the correct departure building, then board there. Gullhaven and Asterfield transfer through Harbourlight rather than using a direct route.
+- Intercity departures are saved before movement. Closing during a ferry or flight safely resumes or completes the journey on the next launch.
+- Version 1 saves migrate to version 2 in Harbourlight while preserving money, Catch Balls, captured creatures, construction progress, minigame score, and timestamps.
 - State autosaves every ten real seconds and saves on close.
 
 ## Status
 
-This is a Yum Leung Cha vertical slice. Tests, lint, typecheck, review suites, and capture workflows are intentionally not run in this speed pass; they remain open work for the planned Yum Tong release-grade pass.
+The focused transit/save suite contains six passing tests. The production Vite bundle builds successfully, and a real headless desktop artifact completed Harbourlight → Gullhaven → Harbourlight → Asterfield with all three streetcar panels, both physical-ticket flows, consumed-ticket badges, and city arrivals verified.
 
 ## License
 
