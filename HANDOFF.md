@@ -1,4 +1,14 @@
-# Handoff — Wildline Nation v0.2.0-build.8
+# Handoff — Wildline Nation v0.2.0-build.10
+
+## 2026-09-18 repository closeout
+
+The default branch is clean and is at commit `e00ce1984c70ac23a266ddf23767684f90b46984`, matching `origin/main`. The linked branch `codex/wildline-bootstrap-fix` is completed history at `5fd6e68a679c238d49c617de5bf7cbfd3b4f0ccc`; it is an ancestor of the default branch and was preserved on the remote before cleanup. No uncommitted files, unmerged index entries, conflict markers, or stashes were found.
+
+The required external archive was created and fully tested before cleanup: 459668 bytes, 205 entries, 163 files, and 41 folders. It includes the Git administrative directory and all 86 tracked paths. There were 0 non-ignored untracked paths and 12812 ignored paths were excluded. The archive test returned `Everything is Ok`.
+
+The default branch has two parents at the integration commit, preserving both lines of history. No conflict resolution was required because the index and tracked files contained no conflicts. The linked checkout directory was already absent, leaving only prunable metadata and the completed redundant branch as cleanup candidates.
+
+The cleanup pass retains any active, user-owned, load-bearing, unmerged, undelivered, or ownership-uncertain work. No stash entries were present. The unreachable Git objects reported during inventory were not assigned to a named branch or stash and remain untouched as ownership-uncertain history.
 
 ## Current state
 

@@ -1,5 +1,14 @@
 # Roadmap
 
+## Repository maintenance — 2026-09-18
+
+- [x] Inventory the primary checkout, linked checkouts, branches, remote refs, and stashes
+- [x] Fetch the remote and preserve the completed `codex/wildline-bootstrap-fix` ref at `5fd6e68a679c238d49c617de5bf7cbfd3b4f0ccc`
+- [x] Verify the default branch at `e00ce1984c70ac23a266ddf23767684f90b46984`, including both merge parents
+- [x] Verify no unmerged index entries, conflict markers, uncommitted paths, or stashes remain
+- [x] Create and fully test the required external archive before cleanup
+- [x] Document retained ownership-uncertain Git objects and excluded ignored paths
+
 ## v0.1.0 — Harbourlight City vertical slice
 
 - [x] One playable city district and original 2.5D map presentation
