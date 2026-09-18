@@ -8,6 +8,7 @@
 - [x] Verify no unmerged index entries, conflict markers, uncommitted paths, or stashes remain
 - [x] Create and fully test the required external archive before cleanup
 - [x] Document retained ownership-uncertain Git objects and excluded ignored paths
+- [x] Remove only the proven redundant branch and stale linked-checkout metadata after archive and ancestry proof
 
 ## v0.1.0 — Harbourlight City vertical slice
 
